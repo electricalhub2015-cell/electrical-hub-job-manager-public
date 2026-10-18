@@ -1,529 +1,121 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-CA">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#102b46">
-<title>ELECTRICAL HUB INC. | Job Manager</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="description" content="Private, on-device job management for ELECTRICAL HUB INC.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<title>ELECTRICAL HUB INC. — Job Manager</title>
 <style>
-:root {
-  --navy:#102b46;
-  --navy2:#1c4564;
-  --green:#b9efc7;
-  --green-dark:#267747;
-  --bg:#f3f7f5;
-  --white:#fff;
-  --border:#dce6e0;
-  --muted:#65766f;
-}
-* { box-sizing:border-box; }
-body {
-  margin:0; background:var(--bg); color:var(--navy);
-  font-family:Arial,Helvetica,sans-serif;
-}
-header {
-  background:var(--navy); color:white; padding:20px 16px;
-  border-bottom:5px solid var(--green);
-}
-.header-inner, main { max-width:1050px; margin:auto; }
-.brand { font-size:22px; font-weight:800; letter-spacing:.5px; }
-.subtitle { margin-top:5px; color:#d9e8e0; font-size:13px; }
-main { padding:16px; }
-.card {
-  background:white; border:1px solid var(--border);
-  border-radius:14px; padding:16px; margin-bottom:14px;
-  box-shadow:0 3px 12px #102b4608;
-}
-h2 { margin:0 0 12px; font-size:19px; }
-h3 { margin:0 0 8px; font-size:16px; }
-label { display:block; font-size:13px; font-weight:700; margin-bottom:6px; }
-input,textarea,select {
-  width:100%; padding:12px; border:1px solid #cbd9d1;
-  border-radius:9px; font-size:16px; background:white; color:var(--navy);
-  margin-bottom:12px; min-width:0;
-}
-textarea { min-height:76px; resize:vertical; }
-button {
-  border:0; border-radius:9px; padding:11px 14px;
-  font-size:14px; font-weight:700; cursor:pointer;
-}
-.primary { background:var(--green); color:var(--navy); }
-.dark { background:var(--navy); color:white; }
-.outline { background:white; color:var(--navy); border:1px solid var(--border); }
-.danger { background:#fff0ef; color:#a12d28; }
-button:disabled { opacity:.5; cursor:wait; }
-.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-.field { min-width:0; }
-.actions { display:flex; flex-wrap:wrap; gap:8px; }
-.tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-bottom:14px; }
-.tab { background:#e5eee8; color:var(--navy); padding:13px 5px; }
-.tab.active { background:var(--navy); color:white; }
-.stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
-.stat { background:#f0f8f2; border-radius:10px; padding:12px; }
-.stat-label { font-size:12px; color:var(--muted); }
-.stat-value { font-weight:800; font-size:18px; margin-top:5px; overflow-wrap:anywhere; }
-.job { border:1px solid var(--border); border-radius:12px; padding:14px; margin-top:10px; }
-.job-top { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
-.job-name { font-weight:800; font-size:17px; overflow-wrap:anywhere; }
-.muted { color:var(--muted); font-size:13px; line-height:1.5; }
-.pill { display:inline-block; padding:5px 8px; border-radius:20px; font-size:11px; font-weight:700; background:#e8f5eb; margin:3px 3px 3px 0; }
-.hidden { display:none!important; }
-.notice { font-size:13px; padding:10px; border-radius:8px; margin-bottom:12px; }
-.info { background:#eaf3ff; color:#244c75; }
-.error { background:#fff0ef; color:#9b2828; }
-.success { background:#e8f7eb; color:#20663b; }
-hr { border:0; border-top:1px solid var(--border); margin:14px 0; }
-@media(max-width:560px) {
-  .grid { grid-template-columns:1fr; gap:0; }
-  .stats { grid-template-columns:1fr 1fr; }
-  .brand { font-size:20px; }
-  main { padding:10px; }
-  .card { padding:13px; }
-}
+:root{color-scheme:light;--navy:#102b46;--navy2:#1c4564;--green:#c9f2d4;--green2:#a9e8ba;--greenDark:#23633d;--bg:#f3f8f5;--white:#fff;--border:#d9e7de;--muted:#62756b;--red:#a32e2e;--shadow:0 8px 26px #102b4610}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--navy);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:linear-gradient(120deg,var(--navy),var(--navy2));color:white;border-bottom:5px solid var(--green);padding:22px 16px}
+.wrap{max-width:1000px;margin:auto}.brand{font-size:clamp(20px,4vw,27px);font-weight:850;letter-spacing:.35px}.subtitle{margin-top:4px;color:#dcebe3;font-size:13px}
+main{max-width:1000px;margin:auto;padding:16px}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.card{background:white;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+h2{font-size:19px;margin:0 0 12px}h3{font-size:16px;margin:0 0 8px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.stat{background:#f0f9f2;border:1px solid #e1f1e5;border-radius:12px;padding:12px;min-width:0}.stat-label{font-size:12px;color:var(--muted)}.stat-value{font-size:clamp(17px,3vw,22px);font-weight:850;margin-top:4px;overflow-wrap:anywhere}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:11px 14px;font-size:14px;font-weight:750;cursor:pointer;min-height:42px}.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #71b9e8;outline-offset:2px}.primary{background:var(--green);color:var(--navy)}.primary:hover{background:var(--green2)}.dark{background:var(--navy);color:#fff}.plain{background:#fff;border:1px solid var(--border);color:var(--navy)}.danger{background:#fff0ef;color:var(--red);border:1px solid #f4d6d4}
+.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0}.tab{background:#e7f0ea;color:var(--navy);border:1px solid transparent}.tab.active{background:var(--navy);color:white}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{min-width:0}label{display:block;font-size:13px;font-weight:750;margin-bottom:6px}input,select,textarea{width:100%;min-width:0;border:1px solid #cbdcd1;border-radius:10px;padding:12px;font:inherit;font-size:16px;color:var(--navy);background:#fff;margin-bottom:12px}textarea{min-height:78px;resize:vertical}
+.job{border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:10px}.job-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.job-name{font-size:17px;font-weight:850;overflow-wrap:anywhere}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e5f7e9;color:#225c38;font-size:11px;font-weight:800;white-space:nowrap}.job-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.detail{background:#f5faf6;border-radius:9px;padding:10px;min-width:0}.detail strong{display:block;margin-top:3px;overflow-wrap:anywhere}.empty{text-align:center;padding:24px 10px}.hidden{display:none!important}.notice{padding:11px 12px;border-radius:10px;margin-bottom:12px;font-size:13px}.info{background:#eaf3ff;color:#244c75}.success{background:#e8f7eb;color:#20663b}.error{background:#fff0ef;color:#9b2828}.profit{background:#eaf8ee;border:1px solid #d6eedc;border-radius:12px;padding:13px;margin:4px 0 14px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 0 18px}
+@media(max-width:600px){main{padding:10px}.card{padding:13px}.grid{grid-template-columns:1fr;gap:0}.stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.stat{padding:9px}.job-details{grid-template-columns:repeat(2,minmax(0,1fr))}.btn{padding:10px 11px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div class="brand">ELECTRICAL HUB INC.</div>
-    <div class="subtitle">JOB MANAGEMENT • SIMPLE • ORGANIZED</div>
-  </div>
-</header>
-
+<header><div class="wrap"><div class="brand">ELECTRICAL HUB INC.</div><div class="subtitle">JOB MANAGER · SIMPLE · ORGANIZED</div></div></header>
 <main>
-  <div id="message" class="notice hidden"></div>
-
-  <section id="loginCard" class="card">
-    <h2>Welcome</h2>
-    <p class="muted">Sign in to access your jobs from your phone.</p>
-    <label for="email">Email</label>
-    <input id="email" type="email" autocomplete="email"
-      placeholder="you@example.com">
-    <label for="password">Password</label>
-    <input id="password" type="password" autocomplete="current-password"
-      placeholder="Your password">
-    <div class="actions">
-      <button class="primary" id="loginBtn" onclick="signIn()">Sign In</button>
-      <button class="outline" id="signupBtn" onclick="signUp()">Create Account</button>
-    </div>
-    <p class="muted">Use your existing account if you already registered.</p>
-  </section>
-
-  <section id="app" class="hidden">
-    <div class="card">
-      <div class="job-top">
-        <div>
-          <h2>Job Dashboard</h2>
-          <div id="userEmail" class="muted"></div>
-        </div>
-        <button class="outline" onclick="signOut()">Sign Out</button>
-      </div>
-      <hr>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-label">Accepted Jobs</div>
-          <div class="stat-value" id="acceptedCount">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Follow-Up</div>
-          <div class="stat-value" id="followCount">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Completed</div>
-          <div class="stat-value" id="completedCount">0</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="actions" style="margin-bottom:12px">
-      <button class="primary" onclick="newJob()">＋ Add New Job</button>
-      <button class="outline" onclick="exportJobs()">Export Backup</button>
-      <button class="outline" onclick="document.getElementById('importFile').click()">Import Backup</button>
-      <input id="importFile" type="file" accept=".json,application/json"
-        class="hidden" onchange="importJobs(event)">
-    </div>
-
-    <section id="editor" class="card hidden">
-      <h2 id="editorTitle">Add Job</h2>
-      <form id="jobForm" onsubmit="saveJob(event)">
-        <input type="hidden" id="jobId">
-        <div class="grid">
-          <div class="field">
-            <label for="client">Customer / Company *</label>
-            <input id="client" required placeholder="Customer name">
-          </div>
-          <div class="field">
-            <label for="phone">Phone</label>
-            <input id="phone" type="tel" placeholder="Phone number">
-          </div>
-          <div class="field">
-            <label for="address">Job Site Address *</label>
-            <input id="address" required placeholder="Job address">
-          </div>
-          <div class="field">
-            <label for="jobDate">Job Date</label>
-            <input id="jobDate" type="date">
-          </div>
-          <div class="field">
-            <label for="status">Job Status</label>
-            <select id="status">
-              <option value="Accepted">Accepted</option>
-              <option value="Follow-Up">Follow-Up</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="followUpDate">Follow-Up Date</label>
-            <input id="followUpDate" type="date">
-          </div>
-          <div class="field">
-            <label for="invoiceTotal">Total Invoice (including tax) $</label>
-            <input id="invoiceTotal" type="number" min="0" step="0.01" value="0">
-          </div>
-          <div class="field">
-            <label for="costs">Total Costs (including tax) $</label>
-            <input id="costs" type="number" min="0" step="0.01" value="0">
-          </div>
-          <div class="field">
-            <label for="paymentStatus">Payment Status</label>
-            <select id="paymentStatus">
-              <option>Not Invoiced</option>
-              <option>Invoiced</option>
-              <option>Partially Paid</option>
-              <option>Paid</option>
-              <option>Overdue</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="esaStatus">ESA Status</label>
-            <select id="esaStatus">
-              <option>Not Required</option>
-              <option>Not Submitted</option>
-              <option>Submitted</option>
-              <option>Inspection Booked</option>
-              <option>Passed</option>
-              <option>Deficiency</option>
-            </select>
-          </div>
-        </div>
-        <label for="description">Job Description</label>
-        <textarea id="description" placeholder="Work to be completed or performed"></textarea>
-        <label for="notes">Notes</label>
-        <textarea id="notes" placeholder="Materials, reminders, other details"></textarea>
-
-        <div class="stat" style="margin-bottom:14px">
-          <div class="stat-label">Estimated Profit (before tax)</div>
-          <div class="stat-value" id="profitPreview">$0.00</div>
-          <div class="muted">Calculated as (invoice total − costs) ÷ 1.13</div>
-        </div>
-        <div class="actions">
-          <button class="primary" id="saveBtn" type="submit">Save Job</button>
-          <button class="outline" type="button" onclick="closeEditor()">Cancel</button>
-        </div>
-      </form>
-    </section>
-
-    <div class="card">
-      <label for="search">Search Jobs</label>
-      <input id="search" placeholder="Search customer, address, or phone"
-        oninput="renderJobs()">
-      <div class="tabs">
-        <button class="tab active" data-tab="Accepted" onclick="setTab('Accepted')">Accepted</button>
-        <button class="tab" data-tab="Follow-Up" onclick="setTab('Follow-Up')">Follow-Up</button>
-        <button class="tab" data-tab="Completed" onclick="setTab('Completed')">Completed</button>
-      </div>
-      <div id="jobList"></div>
-    </div>
-  </section>
+<div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
+<section class="card">
+ <div class="topline"><div><h2 style="margin-bottom:3px">Job Dashboard</h2><div class="muted">Your job records are saved in this browser on this device.</div></div><div class="actions"><button class="btn plain" id="exportBtn" type="button">Export Backup</button><button class="btn plain" id="importBtn" type="button">Import Backup</button><input id="importFile" type="file" accept=".json,application/json" class="hidden"></div></div>
+ <div class="stats"><div class="stat"><div class="stat-label">Accepted Jobs</div><div id="acceptedCount" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Completed Jobs</div><div id="completedCount" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Total Profit</div><div id="totalProfit" class="stat-value">$0.00</div></div></div>
+</section>
+<div class="actions" style="margin-bottom:12px"><button class="btn primary" id="addBtn" type="button">＋ Add New Job</button></div>
+<section id="editor" class="card hidden">
+ <div class="topline"><h2 id="editorTitle">Add New Job</h2><button class="btn plain" id="cancelBtn" type="button">Cancel</button></div>
+ <form id="jobForm">
+ <input id="jobId" type="hidden">
+ <div class="grid">
+  <div class="field"><label for="client">Customer / Company *</label><input id="client" required maxlength="150" placeholder="Customer name"></div>
+  <div class="field"><label for="phone">Phone</label><input id="phone" type="tel" maxlength="50" placeholder="Phone number"></div>
+  <div class="field"><label for="address">Job Site Address *</label><input id="address" required maxlength="250" placeholder="Job address"></div>
+  <div class="field"><label for="jobDate">Job Date</label><input id="jobDate" type="date"></div>
+  <div class="field"><label for="invoiceTotal">Total Invoice (including tax) $</label><input id="invoiceTotal" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
+  <div class="field"><label for="costs">Total Cost (including tax) $</label><input id="costs" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
+  <div class="field"><label for="paymentStatus">Payment Status</label><select id="paymentStatus"><option>Not Invoiced</option><option>Invoiced</option><option>Partially Paid</option><option>Paid</option><option>Overdue</option></select></div>
+  <div class="field"><label for="esaStatus">ESA Status</label><select id="esaStatus"><option>Not Required</option><option>Not Submitted</option><option>Submitted</option><option>Inspection Booked</option><option>Passed</option><option>Deficiency</option></select></div>
+ </div>
+ <label for="description">Job Description</label><textarea id="description" maxlength="3000" placeholder="Work to be completed or performed"></textarea>
+ <label for="notes">Notes</label><textarea id="notes" maxlength="3000" placeholder="Materials, reminders, other details"></textarea>
+ <div class="profit"><div class="stat-label">Total Profit</div><div id="profitPreview" class="stat-value">$0.00</div><div class="muted">Invoice total − total cost. Both amounts include tax; no separate HST calculation.</div></div>
+ <div class="actions"><button class="btn primary" type="submit" id="saveBtn">Save Job</button><button class="btn plain" id="cancelBtn2" type="button">Cancel</button></div>
+ </form>
+</section>
+<section class="card">
+ <label for="search">Search Jobs</label><input id="search" type="search" placeholder="Search customer, address, phone or notes">
+ <div class="tabs"><button class="btn tab active" data-tab="Accepted" type="button">Accepted Jobs</button><button class="btn tab" data-tab="Completed" type="button">Completed Jobs</button></div>
+ <div id="jobList"></div>
+</section>
+<div class="footer">ELECTRICAL HUB INC. · Private on-device job records</div>
 </main>
-
 <script>
-const SUPABASE_URL = "https://rczdillhudoigtrzgylx.supabase.co";
-const SUPABASE_KEY = "sb_publishable_GLuyDwt53r_jczKaNuuFpg_hi1nSsKa";
-
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-let currentUser = null;
-let jobs = [];
-let activeTab = "Accepted";
-
-function money(value) {
-  return new Intl.NumberFormat("en-CA", {
-    style:"currency", currency:"CAD"
-  }).format(Number(value) || 0);
+(function(){
+"use strict";
+const STORAGE_KEY="electricalHubJobs_v1";
+const $=id=>document.getElementById(id);
+let jobs=readJobs(), activeTab="Accepted";
+function money(n){return new Intl.NumberFormat("en-CA",{style:"currency",currency:"CAD"}).format(Number(n)||0)}
+function profit(j){return (Number(j.invoiceTotal)||0)-(Number(j.costs)||0)}
+function uid(){return "job-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,10)}
+function notice(message,type="info"){const el=$("notice");el.textContent=message;el.className="notice "+type}
+function clearNotice(){$("notice").className="notice hidden"}
+function readJobs(){try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");return Array.isArray(value)?value:[]}catch(e){return []}}
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(jobs));return true}catch(e){notice("Could not save: device storage may be full. Export a backup and try again.","error");return false}}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function updateStats(){$("acceptedCount").textContent=jobs.filter(j=>j.status!=="Completed").length;$("completedCount").textContent=jobs.filter(j=>j.status==="Completed").length;$("totalProfit").textContent=money(jobs.reduce((sum,j)=>sum+profit(j),0))}
+function render(){
+ updateStats();
+ document.querySelectorAll("[data-tab]").forEach(b=>b.classList.toggle("active",b.dataset.tab===activeTab));
+ const q=$("search").value.trim().toLowerCase();
+ const filtered=jobs.filter(j=>(j.status||"Accepted")===activeTab&&[j.client,j.address,j.phone,j.description,j.notes,j.paymentStatus,j.esaStatus].some(v=>String(v||"").toLowerCase().includes(q)));
+ const list=$("jobList");
+ if(!filtered.length){list.innerHTML='<div class="empty"><div style="font-weight:800;margin-bottom:5px">No '+(activeTab==="Accepted"?"accepted":"completed")+' jobs found</div><div class="muted">Tap “Add New Job” to create a record.</div></div>';return}
+ list.innerHTML=filtered.map(j=>'<article class="job"><div class="job-head"><div><div class="job-name">'+esc(j.client||"Unnamed job")+'</div><div class="muted">'+esc(j.address||"")+'</div>'+(j.phone?'<div class="muted">'+esc(j.phone)+'</div>':'')+(j.jobDate?'<div class="muted">Job date: '+esc(j.jobDate)+'</div>':'')+'</div><span class="pill">'+esc(j.status||"Accepted")+'</span></div>'+(j.description?'<p>'+esc(j.description)+'</p>':'')+'<div class="job-details"><div class="detail"><div class="stat-label">Invoice total</div><strong>'+money(j.invoiceTotal)+'</strong></div><div class="detail"><div class="stat-label">Total cost</div><strong>'+money(j.costs)+'</strong></div><div class="detail"><div class="stat-label">Total profit</div><strong>'+money(profit(j))+'</strong></div><div class="detail"><div class="stat-label">Payment</div><strong>'+esc(j.paymentStatus||"Not Invoiced")+'</strong></div><div class="detail"><div class="stat-label">ESA</div><strong>'+esc(j.esaStatus||"Not Required")+'</strong></div></div>'+(j.notes?'<p class="muted">Notes: '+esc(j.notes)+'</p>':'')+'<div class="actions"><button class="btn plain" data-action="edit" data-id="'+esc(j.id)+'" type="button">Edit</button>'+(j.phone?'<a class="btn plain" style="text-decoration:none;display:inline-flex;align-items:center" href="tel:'+esc(j.phone.replace(/[^+\d]/g,""))+'">Call</a>':'')+(j.status==="Completed"?'<button class="btn plain" data-action="reopen" data-id="'+esc(j.id)+'" type="button">Move to Accepted</button>':'<button class="btn primary" data-action="complete" data-id="'+esc(j.id)+'" type="button">Mark Completed</button>')+'<button class="btn danger" data-action="delete" data-id="'+esc(j.id)+'" type="button">Delete</button></div></article>').join("");
 }
-function profit(job) {
-  return ((Number(job.invoiceTotal)||0) - (Number(job.costs)||0)) / 1.13;
+function openEditor(job){
+ $("jobForm").reset();$("jobId").value=job?job.id:"";
+ $("editorTitle").textContent=job?"Edit Job":"Add New Job";
+ const fields=["client","phone","address","jobDate","invoiceTotal","costs","paymentStatus","esaStatus","description","notes"];
+ fields.forEach(k=>$(k).value=job?(job[k]??(k==="invoiceTotal"||k==="costs"?0:"")):(k==="invoiceTotal"||k==="costs"?0:""));
+ $("editor").classList.remove("hidden");updateProfit();$("editor").scrollIntoView({behavior:"smooth",block:"start"});$("client").focus({preventScroll:true});
 }
-function showMessage(text, type="info") {
-  const el = document.getElementById("message");
-  el.textContent = text;
-  el.className = "notice " + type;
+function closeEditor(){$("editor").classList.add("hidden")}
+function updateProfit(){$("profitPreview").textContent=money((Number($("invoiceTotal").value)||0)-(Number($("costs").value)||0))}
+function saveJob(e){
+ e.preventDefault();
+ const oldId=$("jobId").value;
+ const old=jobs.find(j=>j.id===oldId);
+ const job={id:oldId||uid(),client:$("client").value.trim(),phone:$("phone").value.trim(),address:$("address").value.trim(),jobDate:$("jobDate").value,invoiceTotal:Math.max(0,Number($("invoiceTotal").value)||0),costs:Math.max(0,Number($("costs").value)||0),paymentStatus:$("paymentStatus").value,esaStatus:$("esaStatus").value,description:$("description").value.trim(),notes:$("notes").value.trim(),status:old?(old.status||"Accepted"):activeTab,createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};
+ if(oldId)jobs=jobs.map(j=>j.id===oldId?job:j);else jobs.unshift(job);
+ if(!persist())return;
+ activeTab=job.status;closeEditor();render();notice("Job saved on this device.","success");
 }
-function clearMessage() {
-  document.getElementById("message").className = "notice hidden";
+function handleAction(e){
+ const b=e.target.closest("button[data-action]");if(!b)return;
+ const j=jobs.find(x=>x.id===b.dataset.id);if(!j)return;
+ if(b.dataset.action==="edit"){openEditor(j);return}
+ if(b.dataset.action==="complete"){j.status="Completed";j.updatedAt=new Date().toISOString()}
+ else if(b.dataset.action==="reopen"){j.status="Accepted";j.updatedAt=new Date().toISOString()}
+ else if(b.dataset.action==="delete"){if(!confirm("Delete this job permanently? Export a backup first if needed."))return;jobs=jobs.filter(x=>x.id!==j.id)}
+ if(!persist())return;activeTab=(b.dataset.action==="complete"?"Completed":b.dataset.action==="reopen"?"Accepted":activeTab);render();notice(b.dataset.action==="delete"?"Job deleted.":b.dataset.action==="complete"?"Job moved to Completed.":"Job moved to Accepted.","success");
 }
-function setBusy(busy) {
-  document.getElementById("loginBtn").disabled = busy;
-  document.getElementById("signupBtn").disabled = busy;
-}
-async function signIn() {
-  clearMessage();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  if (!email || !password) return showMessage("Enter your email and password.", "error");
-  setBusy(true);
-  const {error} = await db.auth.signInWithPassword({email,password});
-  setBusy(false);
-  if (error) showMessage(error.message, "error");
-}
-async function signUp() {
-  clearMessage();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  if (!email || !password) return showMessage("Enter your email and password.", "error");
-  if (password.length < 6) return showMessage("Use a password with at least 6 characters.", "error");
-  setBusy(true);
-  const {error} = await db.auth.signUp({email,password});
-  setBusy(false);
-  if (error) showMessage(error.message, "error");
-  else showMessage("Account created. If email confirmation is enabled, check your inbox before signing in.", "success");
-}
-async function signOut() {
-  await db.auth.signOut();
-}
-db.auth.onAuthStateChange((_event, session) => {
-  currentUser = session?.user || null;
-  updateScreen();
-});
-async function updateScreen() {
-  const loggedIn = !!currentUser;
-  document.getElementById("loginCard").classList.toggle("hidden", loggedIn);
-  document.getElementById("app").classList.toggle("hidden", !loggedIn);
-  if (loggedIn) {
-    document.getElementById("userEmail").textContent = currentUser.email || "";
-    await loadJobs();
-  } else {
-    jobs = [];
-    closeEditor();
-  }
-}
-async function loadJobs() {
-  if (!currentUser) return;
-  showMessage("Loading your jobs…", "info");
-  const {data,error} = await db.from("jobs")
-    .select("id,job_data,created_at,updated_at")
-    .eq("user_id",currentUser.id)
-    .order("created_at",{ascending:false});
-  if (error) {
-    showMessage("Could not load jobs: " + error.message +
-      ". Check that the Supabase jobs table and policies are configured.", "error");
-    return;
-  }
-  jobs = (data || []).map(row => ({...row.job_data, id:row.id}));
-  clearMessage();
-  renderJobs();
-}
-function setTab(tab) {
-  activeTab = tab;
-  document.querySelectorAll(".tab").forEach(b =>
-    b.classList.toggle("active",b.dataset.tab===tab));
-  renderJobs();
-}
-function updateStats() {
-  document.getElementById("acceptedCount").textContent =
-    jobs.filter(j => j.status==="Accepted").length;
-  document.getElementById("followCount").textContent =
-    jobs.filter(j => j.status==="Follow-Up").length;
-  document.getElementById("completedCount").textContent =
-    jobs.filter(j => j.status==="Completed").length;
-}
-function safe(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
-}
-function renderJobs() {
-  updateStats();
-  const query = document.getElementById("search").value.trim().toLowerCase();
-  const filtered = jobs.filter(j => (j.status || "Accepted") === activeTab &&
-    [j.client,j.address,j.phone,j.description,j.notes]
-      .some(v => String(v||"").toLowerCase().includes(query)));
-  const list = document.getElementById("jobList");
-  if (!filtered.length) {
-    list.innerHTML = '<p class="muted">No jobs here yet. Tap “Add New Job” to get started.</p>';
-    return;
-  }
-  list.innerHTML = filtered.map(j => `
-    <article class="job">
-      <div class="job-top">
-        <div>
-          <div class="job-name">${safe(j.client || "Unnamed job")}</div>
-          <div class="muted">${safe(j.address || "")}</div>
-          ${j.phone ? `<div class="muted">${safe(j.phone)}</div>` : ""}
-        </div>
-        <span class="pill">${safe(j.status || "Accepted")}</span>
-      </div>
-      ${j.jobDate ? `<p class="muted">Job date: ${safe(j.jobDate)}</p>` : ""}
-      ${j.followUpDate ? `<p class="muted">Follow-up: ${safe(j.followUpDate)}</p>` : ""}
-      ${j.description ? `<p>${safe(j.description)}</p>` : ""}
-      <div class="stat" style="margin:10px 0">
-        <div class="grid">
-          <div><div class="stat-label">Invoice total</div><strong>${money(j.invoiceTotal)}</strong></div>
-          <div><div class="stat-label">Total costs</div><strong>${money(j.costs)}</strong></div>
-          <div><div class="stat-label">Estimated profit</div><strong>${money(profit(j))}</strong></div>
-          <div><div class="stat-label">Payment</div><strong>${safe(j.paymentStatus || "Not Invoiced")}</strong></div>
-          <div><div class="stat-label">ESA</div><strong>${safe(j.esaStatus || "Not Required")}</strong></div>
-        </div>
-      </div>
-      ${j.notes ? `<p class="muted">Notes: ${safe(j.notes)}</p>` : ""}
-      <div class="actions">
-        ${j.phone ? `<button class="outline" onclick="callPhone('${encodeURIComponent(j.phone)}')">Call</button>` : ""}
-        <button class="outline" onclick="editJob('${safe(j.id)}')">Edit</button>
-        ${j.status!=="Completed" ?
-          `<button class="primary" onclick="changeStatus('${safe(j.id)}','Completed')">Mark Completed</button>` :
-          `<button class="outline" onclick="changeStatus('${safe(j.id)}','Accepted')">Reopen Job</button>`}
-        ${j.status==="Accepted" ?
-          `<button class="outline" onclick="changeStatus('${safe(j.id)}','Follow-Up')">Move to Follow-Up</button>` : ""}
-        ${j.status==="Follow-Up" ?
-          `<button class="outline" onclick="changeStatus('${safe(j.id)}','Accepted')">Move to Accepted</button>` : ""}
-        <button class="danger" onclick="deleteJob('${safe(j.id)}')">Delete</button>
-      </div>
-    </article>`).join("");
-}
-function callPhone(phone) {
-  location.href = "tel:" + decodeURIComponent(phone);
-}
-function newJob() {
-  document.getElementById("jobForm").reset();
-  document.getElementById("jobId").value = "";
-  document.getElementById("invoiceTotal").value = "0";
-  document.getElementById("costs").value = "0";
-  document.getElementById("status").value = activeTab;
-  document.getElementById("editorTitle").textContent = "Add Job";
-  document.getElementById("editor").classList.remove("hidden");
-  document.getElementById("editor").scrollIntoView({behavior:"smooth"});
-  updateProfit();
-}
-function closeEditor() {
-  document.getElementById("editor")?.classList.add("hidden");
-}
-function editJob(id) {
-  const j = jobs.find(x => x.id === id);
-  if (!j) return;
-  document.getElementById("jobId").value = j.id;
-  ["client","phone","address","jobDate","status","followUpDate",
-   "invoiceTotal","costs","paymentStatus","esaStatus","description","notes"]
-    .forEach(key => document.getElementById(key).value = j[key] ?? "");
-  document.getElementById("editorTitle").textContent = "Edit Job";
-  document.getElementById("editor").classList.remove("hidden");
-  document.getElementById("editor").scrollIntoView({behavior:"smooth"});
-  updateProfit();
-}
-async function saveJob(event) {
-  event.preventDefault();
-  if (!currentUser) return showMessage("Please sign in again.", "error");
-  const id = document.getElementById("jobId").value || crypto.randomUUID();
-  const job = {
-    id,
-    client:document.getElementById("client").value.trim(),
-    phone:document.getElementById("phone").value.trim(),
-    address:document.getElementById("address").value.trim(),
-    jobDate:document.getElementById("jobDate").value,
-    status:document.getElementById("status").value,
-    followUpDate:document.getElementById("followUpDate").value,
-    invoiceTotal:Number(document.getElementById("invoiceTotal").value)||0,
-    costs:Number(document.getElementById("costs").value)||0,
-    paymentStatus:document.getElementById("paymentStatus").value,
-    esaStatus:document.getElementById("esaStatus").value,
-    description:document.getElementById("description").value.trim(),
-    notes:document.getElementById("notes").value.trim()
-  };
-  const btn = document.getElementById("saveBtn");
-  btn.disabled = true;
-  btn.textContent = "Saving…";
-  const {error} = await db.from("jobs").upsert({
-    id:job.id,
-    user_id:currentUser.id,
-    job_data:job,
-    updated_at:new Date().toISOString()
-  });
-  btn.disabled = false;
-  btn.textContent = "Save Job";
-  if (error) return showMessage("Could not save job: " + error.message, "error");
-  const index = jobs.findIndex(j => j.id === id);
-  if (index >= 0) jobs[index] = job;
-  else jobs.unshift(job);
-  closeEditor();
-  setTab(job.status);
-  showMessage("Job saved successfully.", "success");
-}
-async function changeStatus(id,status) {
-  const j = jobs.find(x => x.id === id);
-  if (!j || !currentUser) return;
-  const updated = {...j,status};
-  const {error} = await db.from("jobs").update({
-    job_data:updated,updated_at:new Date().toISOString()
-  }).eq("id",id).eq("user_id",currentUser.id);
-  if (error) return showMessage("Could not update job: " + error.message, "error");
-  jobs = jobs.map(x => x.id===id ? updated : x);
-  setTab(status);
-  showMessage("Job moved to " + status + ".", "success");
-}
-async function deleteJob(id) {
-  if (!confirm("Delete this job permanently? Export a backup first if needed.")) return;
-  const {error} = await db.from("jobs").delete()
-    .eq("id",id).eq("user_id",currentUser.id);
-  if (error) return showMessage("Could not delete job: " + error.message, "error");
-  jobs = jobs.filter(j => j.id!==id);
-  renderJobs();
-  showMessage("Job deleted.", "success");
-}
-function updateProfit() {
-  const invoice = Number(document.getElementById("invoiceTotal").value)||0;
-  const costs = Number(document.getElementById("costs").value)||0;
-  document.getElementById("profitPreview").textContent = money((invoice-costs)/1.13);
-}
-document.getElementById("invoiceTotal").addEventListener("input",updateProfit);
-document.getElementById("costs").addEventListener("input",updateProfit);
-
-function exportJobs() {
-  const blob = new Blob([JSON.stringify(jobs,null,2)],{type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "electrical-hub-jobs-backup.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-async function importJobs(event) {
-  const file = event.target.files[0];
-  event.target.value = "";
-  if (!file || !currentUser) return;
-  try {
-    const data = JSON.parse(await file.text());
-    if (!Array.isArray(data)) throw new Error("This backup is not a job list.");
-    if (!confirm("Import " + data.length + " jobs? Jobs with matching IDs will be replaced.")) return;
-    for (const item of data) {
-      if (!item || typeof item !== "object" || !item.client || !item.address) continue;
-      const job = {...item,id:item.id || crypto.randomUUID()};
-      const {error} = await db.from("jobs").upsert({
-        id:job.id,user_id:currentUser.id,job_data:job,
-        updated_at:new Date().toISOString()
-      });
-      if (error) throw error;
-    }
-    await loadJobs();
-    showMessage("Backup imported.", "success");
-  } catch (err) {
-    showMessage("Import failed: " + err.message, "error");
-  }
-}
-db.auth.getSession().then(({data}) => {
-  currentUser = data.session?.user || null;
-  updateScreen();
-});
+function exportBackup(){const blob=new Blob([JSON.stringify({app:"ELECTRICAL HUB INC. Job Manager",version:1,exportedAt:new Date().toISOString(),jobs},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="electrical-hub-jobs-backup.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);notice("Backup exported. Keep it somewhere safe.","success")}
+async function importBackup(e){const file=e.target.files&&e.target.files[0];e.target.value="";if(!file)return;try{const parsed=JSON.parse(await file.text());const incoming=Array.isArray(parsed)?parsed:parsed.jobs;if(!Array.isArray(incoming))throw new Error("This file does not contain a job list.");if(!confirm("Import "+incoming.length+" jobs? Existing jobs with matching IDs will be replaced."))return;const byId=new Map(jobs.map(j=>[j.id,j]));for(const raw of incoming){if(!raw||typeof raw!=="object"||!raw.client||!raw.address)continue;const item={...raw,id:String(raw.id||uid()),status:raw.status==="Completed"?"Completed":"Accepted",invoiceTotal:Number(raw.invoiceTotal)||0,costs:Number(raw.costs)||0};byId.set(item.id,item)}jobs=Array.from(byId.values());if(!persist())return;render();notice("Backup imported successfully.","success")}catch(err){notice("Import failed: "+err.message,"error")}}
+$("addBtn").addEventListener("click",()=>openEditor(null));$("cancelBtn").addEventListener("click",closeEditor);$("cancelBtn2").addEventListener("click",closeEditor);$("jobForm").addEventListener("submit",saveJob);$("invoiceTotal").addEventListener("input",updateProfit);$("costs").addEventListener("input",updateProfit);$("search").addEventListener("input",render);$("jobList").addEventListener("click",handleAction);document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{activeTab=b.dataset.tab;render();clearNotice()}));$("exportBtn").addEventListener("click",exportBackup);$("importBtn").addEventListener("click",()=>$("importFile").click());$("importFile").addEventListener("change",importBackup);
+render();
+if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}))}
+})();
 </script>
 </body>
 </html>
