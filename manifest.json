@@ -1,0 +1,13 @@
+{
+  "name": "ELECTRICAL HUB INC. Job Manager",
+  "short_name": "EH Jobs",
+  "description": "Private on-device job management for ELECTRICAL HUB INC.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f8f5",
+  "theme_color": "#102b46",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
